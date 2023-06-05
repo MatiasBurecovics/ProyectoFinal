@@ -16,7 +16,6 @@ const ListadoLibros = () => {
 
           .then((librosJson) => {
 
-            console.log("libros",librosJson)
 
             setLibros(librosJson)
 
