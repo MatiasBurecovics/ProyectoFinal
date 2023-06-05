@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.index {
+  position: relative;
+}
+
+.top-left-buttons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.login-button,
+.register-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+}
+
+.top-right-profile {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.gestor {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.gestor-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.center-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.center-buttons button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: #ebebeb;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.reviews-button {
+  background-color: #ebebeb;
+}
+
+.faq-button {
+  background-color: #ebebeb;
+}
+
+.citizenships-button {
+  background-color: #ebebeb;
+}
+
+.description {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.description p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+

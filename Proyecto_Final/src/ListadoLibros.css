@@ -1,0 +1,39 @@
+.table-container {
+    width: 100%;
+    margin: 20px auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background-color: #ffffff;
+  }
+  
+  th {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  tbody  {
+    background-color: #233061;
+    color: white;
+  }
+  
+  td {
+    padding: 10px;
+  }
+  
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .loading {
+    text-align: center;
+    margin: 20px;
+  }
+  
