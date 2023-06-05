@@ -1,0 +1,36 @@
+.tabla-libros{
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+
+    font-size: 1px;
+  }
+  
+  .tabla-libros .material-react-table {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tabla-libros .material-react-table .mrt-header {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+  }
+  
+  .tabla-libros .material-react-table .mrt-cell {
+    padding: 10px;
+  }
+  
+  .tabla-libros .material-react-table .mrt-cell img {
+    width: 100px;
+  }
+  
+  .tabla-libros .material-react-table .mrt-cell:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .tabla-libros .material-react-table .mrt-cell:nth-child(odd) {
+    background-color: #fff;
+  }
+  
