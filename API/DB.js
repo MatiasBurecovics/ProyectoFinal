@@ -1,8 +1,7 @@
 const configDB = {
     user: 'PF',
     password: 'PF',
-    server: 'localhost',
-    port: 59833,
+    server: 'A-PHZ2-CIDI-025',
     database: 'Proyecto final',
     options: {
         trustServerCertificate: true,
