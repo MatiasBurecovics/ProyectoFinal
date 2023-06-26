@@ -1,6 +1,5 @@
 import { getAll, getById } from './Script.js';
 import express from "express"
-import Libros from './Libros.js';
 import cors from  "cors";
 
 
@@ -13,7 +12,7 @@ app.use(express.json())
 app.get('/libros', async(req, res) => {
     const { foto,titulo,autor,materia,editorial,descripcion,condicion,buscoOVendo,precio } = req.query;
     const Libros = await getAll(foto,titulo,autor,materia,editorial,descripcion,condicion,buscoOVendo,precio)
-    res.status(200).send(Libros)
+    res.status(200).json(Libros)
 })
 
 
