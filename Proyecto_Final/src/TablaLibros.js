@@ -1,33 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './TablaLibros.css';
 
-
-const ListadoLibros = ({libros}) => {
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchField, setSearchField] = useState('');
-
-  const handleSearchTerm = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearchField = (event) => {
-    setSearchField(event.target.value);
-  };
-
-  const handleSearch = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/libros?${searchField}=${searchTerm.toLowerCase()}`);
-      if (response.ok) {
-        const data = await response.json();
-      } else {
-        console.error('Error:', response.status);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+const TablaLibros = ({ libros }) => {
+ 
+  
   const renderCards = () => {
+    if (libros.length === 0) {
+      return  <div className="error-container">
+      <p className="error-message">No se encontraron resultados</p>
+    </div>
+    }
     return libros.map((libro) => (
       <div className="card" style={{ width: '18rem' }} key={libro.titulo}>
         <img className="card-img-top" src={libro.foto} alt={libro.titulo} />
@@ -49,25 +31,7 @@ const ListadoLibros = ({libros}) => {
     ));
   };
 
-  return (
-    <div>
-      <div>
-        <input
-          type="text"
-          placeholder="Buscar por término"
-          value={searchTerm}
-          onChange={handleSearchTerm}
-        />
-        <select value={searchField} onChange={handleSearchField}>
-          <option value="titulo">Título</option>
-          <option value="autor">Autor</option>
-          <option value="editorial">Editorial</option>
-        </select>
-        <button onClick={handleSearch}>Buscar</button>
-      </div>
-      <div>{renderCards()}</div>
-    </div>
-  );
+  return <div className="card-container">{renderCards()}</div>;
 };
 
-export default ListadoLibros;
+export default TablaLibros;
