@@ -49,3 +49,21 @@ export const getById = async (id) => {
     const results = await conn.request().input("pId",id).query('SELECT * FROM libros WHERE @pId = IdUsuario');
     return results.recordset;
 }
+export const insertarLibro = async (libro) => {
+  const conn = await sql.connect(configDB);
+  const results = await conn.request()
+      .input("pFoto", sql.VarChar, libro?.foto ?? '')
+      .input("pTitulo", sql.VarChar, libro?.titulo ?? '')
+      .input("pAutor", sql.VarChar, libro?.autor ?? '')
+      .input("pMateria", sql.VarChar, libro?.materia ?? '')
+      .input("pEditorial", sql.VarChar, libro?.editorial ?? '')
+      .input("pDescripcion", sql.VarChar, libro?.descripcion ?? '')
+      .input("pCondicion", sql.Bit, libro?.condicion ?? false)
+      .input("pBuscoOVendo", sql.Bit, libro?.buscoOvendo ?? false)
+      .input("pPrecio", sql.Int, libro?.precio ?? 0)
+      .input("pIdUsuario", sql.Int, libro?.IdUsuario ?? 0)
+      .query("INSERT INTO Libros(Foto, Titulo, Autor, Materia, Editorial, Descripcion, Condicion, BuscoOVendo, Precio, IdUsuario) VALUES (@pFoto, @pTitulo, @pAutor, @pMateria, @pEditorial, @pDescripcion, @pCondicion, @pBuscoOVendo, @pPrecio, @pIdUsuario)");
+  
+  console.log(results);
+  return results.recordset;
+}
