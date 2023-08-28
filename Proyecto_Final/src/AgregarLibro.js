@@ -3,7 +3,7 @@ import './AgregarLibro.css';
 
 const AgregarLibro = () => {
     const [formData, setFormData] = useState({
-        Foto: '',
+        Foto: null,
         Titulo: '',
         Autor: '',
         Materia: '',
@@ -11,7 +11,7 @@ const AgregarLibro = () => {
         Descripcion: '',
         Condicion: '',
         BuscoOVendo: '',
-        Precio: '' ,
+        Precio: '',
         IdUsuario: 0
     });
 
@@ -23,40 +23,58 @@ const AgregarLibro = () => {
         }));
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFormData(prevData => ({
+            ...prevData,
+            Foto: file
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
 
-        try {
-            const response = await fetch('http://localhost:4000/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+        const reader = new FileReader();
+        reader.readAsDataURL(formData.Foto);
+        reader.onload = async () => {
+            const base64Image = reader.result;
 
-            if (response.status === 201) {
-                console.log('Libro agregado correctamente');
-                window.location.reload();
-                setFormData({
-                    Foto: '',
-                    Titulo: '',
-                    Autor: '',
-                    Materia: '',
-                    Editorial: '',
-                    Descripcion: '',
-                    Condicion: '',
-                    BuscoOVendo: '',
-                    Precio: '' ,
-                    IdUsuario: 0
+            const dataToSend = {
+                ...formData,
+                Foto: base64Image,
+            };
+
+            try {
+                const response = await fetch('http://localhost:4000/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
                 });
-            } else {
-                console.log('Error al agregar el libro');
+
+                if (response.status === 201) {
+                    console.log('Libro agregado correctamente');
+                    window.location.reload();
+                    setFormData({
+                        Foto: null,
+                        Titulo: '',
+                        Autor: '',
+                        Materia: '',
+                        Editorial: '',
+                        Descripcion: '',
+                        Condicion: '',
+                        BuscoOVendo: '',
+                        Precio: '',
+                        IdUsuario: 0
+                    });
+                } else {
+                    console.log('Error al agregar el libro');
+                }
+            } catch (error) {
+                console.error('Error:', error);
             }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        };
     };
 
     return (
@@ -67,11 +85,9 @@ const AgregarLibro = () => {
                     <label>
                         Foto:
                         <input
-                            type="text"
-                            name="Foto"
-                            value={formData.foto}
-                            onChange={handleChange}
-                            placeholder="Foto"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
                             required
                         />
                     </label>
@@ -80,7 +96,7 @@ const AgregarLibro = () => {
                         <input
                             type="text"
                             name="Titulo"
-                            value={formData.titulo}
+                            value={formData.Titulo}
                             onChange={handleChange}
                             placeholder="Título"
                             required
