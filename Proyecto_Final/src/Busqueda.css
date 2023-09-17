@@ -55,7 +55,6 @@
   margin-right: 4px;
 }
 
-/* Media Query para pantallas pequeñas (como dispositivos móviles) */
 @media (max-width: 768px) {
   .busqueda-container {
     padding: 8px;

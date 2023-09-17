@@ -15,6 +15,7 @@ function App() {
   const [usuarios, setUsuarios] = useState({});
   const [selectedLibro, setSelectedLibro] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [filtroBuscoOVendo, setFiltroBuscoOVendo] = useState('todos'); 
 
   const handleVerDetalles = (libro) => {
     setSelectedLibro(libro);
@@ -41,9 +42,16 @@ function App() {
   const handleSearch = async (term, fields) => {
     if (term !== '' && fields.length > 0) {
       try {
-        const queryParams = fields.map((field) => `${field}=${term.toLowerCase()}`).join('&');
+        const queryParams = fields.map((field) => {
+          if (field === 'true' || field === 'false') {
+            return `buscoOVendo=${field === 'true'}`;
+          }
+          return `${field}=${term.toLowerCase()}`;
+        }).join('&');
   
-        const response = await fetch(`http://localhost:4000/libros?${queryParams}`);
+        const filtroQueryParam = filtroBuscoOVendo === 'todos' ? '' : `&buscoOVendo=${filtroBuscoOVendo}`;
+  
+        const response = await fetch(`http://localhost:4000/libros?${queryParams}${filtroQueryParam}`);
         if (response.ok) {
           const data = await response.json();
           setLibros(data);
@@ -104,11 +112,13 @@ function App() {
   return (
     <div className="App" style={{ backgroundColor: '#233061' }}>
       <Busqueda
-        searchTerm={searchTerm}
-        searchFields={searchFields}
-        handleSearchTerm={handleSearchTerm}
-        handleToggleSearchField={handleToggleSearchField}
-        handleSearch={handleSearch}
+  searchTerm={searchTerm}
+  searchFields={searchFields}
+  handleSearchTerm={handleSearchTerm}
+  handleToggleSearchField={handleToggleSearchField}
+  handleSearch={handleSearch}
+  filtroBuscoOVendo={filtroBuscoOVendo}
+  setFiltroBuscoOVendo={setFiltroBuscoOVendo}
    
       />
       <BrowserRouter>

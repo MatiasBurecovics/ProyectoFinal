@@ -1,77 +1,55 @@
-/* Estilos generales */
-.mis-libros-container {
-    padding: 20px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    max-width: 800px;
-  }
-  
-  .mis-libros-container h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
-    color: black;
-  }
-  
+
+.table-container {
+  overflow-x: auto;
+}
+
+.mis-libros-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mis-libros-table th,
+.mis-libros-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold; /* Esto ya establece el texto en negrita */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: black;
+}
+
+
+.libro-foto {
+  max-width: 80px;
+  height: auto;
+}
+
+
+.mis-libros-table a {
+  text-decoration: none;
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.mis-libros-table a:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 768px) {
   .mis-libros-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px; 
     color: black;
   }
-  
+
   .mis-libros-table th,
   .mis-libros-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .mis-libros-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+    padding: 8px; 
     color: black;
   }
-  
-  .mis-libros-table img {
-    max-width: 100px;
-    height: auto;
-    border-radius: 5px;
-    color: black;
-  }
-  
-  .mis-libros-table tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .mis-libros-table td:last-child {
-    text-align: center;
-    color: black;
-  }
-  
-  .mis-libros-table button {
-    background-color: #007bff;
-    color: black;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .mis-libros-table button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Media Query para pantallas pequeñas (como dispositivos móviles) */
-  @media (max-width: 768px) {
-    .mis-libros-container {
-      /* Ajustes para dispositivos móviles */
-      padding: 10px; /* Reduce el espacio interior */
-    }
-  }
-  
+
+}

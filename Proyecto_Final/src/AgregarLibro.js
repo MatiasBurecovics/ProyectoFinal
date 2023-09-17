@@ -13,7 +13,7 @@ const AgregarLibro = () => {
         Condicion: '',
         BuscoOVendo: '',
         Precio: '',
-        IdUsuario: 0
+        IdUsuario: 1
     });
 
     const handleChange = (e) => {
@@ -67,7 +67,7 @@ const AgregarLibro = () => {
                         Condicion: '',
                         BuscoOVendo: '',
                         Precio: '',
-                        IdUsuario: 0
+                        IdUsuario: 1
                     });
                 } else {
                     console.log('Error al agregar el libro');
@@ -173,21 +173,12 @@ const AgregarLibro = () => {
                             required
                         />
                     </label>
-                    <label>
-                        Id Usuario:
-                        <input
-                            type="number"
-                            name="IdUsuario"
-                            value={formData.idUsuario}
-                            onChange={handleChange}
-                            placeholder="IdUsuario"
-                            required
-                        />
-                    </label>
+                   
                     <button type="submit">Agregar Libro</button>
                 </form>
             </div>
-            <Link to="/">Volver a Tabla Libros</Link>
+            <Link to="/" className="link-volver">Volver a Tabla Libros</Link>
+
         </div>
     );
 };

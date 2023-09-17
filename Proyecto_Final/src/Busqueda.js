@@ -1,90 +1,67 @@
-import React, { useState } from 'react';
-import './Busqueda.css';
+import React from 'react';
 
-const Busqueda = ({
-  searchTerm,
-  searchFields,
-  handleSearchTerm,
-  handleToggleSearchField,
-  handleSearch,
-}) => {
-  const handleCombinedSearch = () => {
-    handleSearch(searchTerm, searchFields);
+function Busqueda(props) {
+  const { searchTerm, searchFields, handleSearchTerm, handleToggleSearchField, handleSearch , filtroBuscoOVendo,setFiltroBuscoOVendo} = props;
+  
+  const handleFiltroBuscoOVendoChange = (e) => {
+    setFiltroBuscoOVendo(e.target.value);
   };
 
-  const [universalSearchTerm, setUniversalSearchTerm] = useState('');
 
-  const handleUniversalSearch = () => {
-    handleSearch(universalSearchTerm, [
-      'titulo',
-      'autor',
-      'editorial',
-      'condicion',
-      'precio',
-      'descripcion',
-      'buscoOVendo',
-    ]);
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(searchTerm, searchFields,searchFields.includes('busco'), searchFields.includes('vendo'));
   };
 
   return (
-    <div className="busqueda-container">
-      <div className="universal-search">
+    <div>
+      <h2>Búsqueda</h2>
+      <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="Búsqueda Universal"
-          value={universalSearchTerm}
-          onChange={(e) => setUniversalSearchTerm(e.target.value)}
-        />
-        <button className="universal-search-button" onClick={handleUniversalSearch}>
-          Buscar Universal
-        </button>
-      </div>
-      <div className="term-search">
-        <input
-          className="busqueda-input"
-          type="text"
-          placeholder="Buscar por término"
+          placeholder="Término de búsqueda"
           value={searchTerm}
           onChange={handleSearchTerm}
         />
-        <button className="term-search-button" onClick={handleCombinedSearch}>
-          Buscar
-        </button>
-      </div>
-      <div className="search-fields">
-        <label className="busqueda-label">
+        <label>
           <input
-            className="busqueda-checkbox"
             type="checkbox"
-            value="titulo"
             checked={searchFields.includes('titulo')}
             onChange={() => handleToggleSearchField('titulo')}
           />
           Título
         </label>
-        <label className="busqueda-label">
+        <label>
           <input
-            className="busqueda-checkbox"
             type="checkbox"
-            value="autor"
             checked={searchFields.includes('autor')}
             onChange={() => handleToggleSearchField('autor')}
           />
           Autor
         </label>
-        <label className="busqueda-label">
+        <label>
           <input
-            className="busqueda-checkbox"
             type="checkbox"
-            value="editorial"
-            checked={searchFields.includes('editorial')}
-            onChange={() => handleToggleSearchField('editorial')}
+            checked={searchFields.includes('materia')}
+            onChange={() => handleToggleSearchField('materia')}
           />
-          Editorial
+          Materia
         </label>
-      </div>
+        <label>
+  <select
+    value={filtroBuscoOVendo}
+    onChange={(e) => handleFiltroBuscoOVendoChange(e)}
+  >
+    <option value="todos">Todos</option>
+    <option value="busco">Busco</option>
+    <option value="vendo">Vendo</option>
+  </select>
+</label>
+
+        <button type="submit">Buscar</button>
+      </form>
     </div>
   );
-};
+}
 
 export default Busqueda;

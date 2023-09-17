@@ -8,15 +8,15 @@
   }
 
   .card-container {
-    /* Añade estilos para centrar los libros */
+
     display: flex;
-    flex-direction: column; /* Cambia la dirección a columna para centrar verticalmente */
-    align-items: center; /* Centra horizontalmente */
+    flex-direction: column; 
+    align-items: center; 
   }
 
   .card {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    margin-bottom: 20px; /* Añade espacio entre los libros */
+    width: 100%; 
+    margin-bottom: 20px; 
   }
 }
 
@@ -27,7 +27,6 @@
   }
 }
 
-/* Estilos para tarjetas de libros */
 .card {
   width: 18rem;
   border: 1px solid #ccc;
