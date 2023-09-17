@@ -1,4 +1,4 @@
-import { getAll, getById, insertarLibro } from './Script.js';
+import { getAll, getById, getUsuarioById, insertarLibro, editarLibro } from './Script.js';
 import express from "express"
 import cors from  "cors";
 import Libros from './Libros.js';
@@ -24,13 +24,45 @@ app.get('/:id', async(req, res) => {
         res.status(400).send()
     }
     const LibrosporId = await getById(id)
-    console.log(LibrosporId)
+
      if(LibrosporId[0]==null)
      {
         res.status(404).send()
      }
     res.status(200).send(LibrosporId)
 })
+app.get('/usuario/:id', async(req, res) => {
+    const id = req.params.id
+    if(id<1)
+    {
+        res.status(400).send()
+    }
+    const UsuarioporId = await getUsuarioById(id)
+
+     if(UsuarioporId[0]==null)
+     {
+        res.status(404).send()
+     }
+    res.status(200).send(UsuarioporId)
+})
+app.put('/libros/:id', async (req, res) => {
+    const id = req.params.id;
+    const libroActualizado = req.body; 
+  
+    try {
+
+      const resultado = await editarLibro(id, libroActualizado);
+  
+      if (resultado) {
+        res.status(200).json({ mensaje: 'Libro actualizado con éxito' });
+      } else {
+        res.status(404).json({ mensaje: 'Libro no encontrado' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ mensaje: 'Error al actualizar el libro' });
+    }
+  });
 
 app.post('/create', async (req, res) => {
     const libro = new Libros();
