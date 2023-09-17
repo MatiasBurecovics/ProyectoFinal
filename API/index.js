@@ -45,25 +45,23 @@ app.get('/usuario/:id', async(req, res) => {
      }
     res.status(200).send(UsuarioporId)
 })
-app.put('/libros/:id', async (req, res) => {
-    const id = req.params.id;
-    const libroActualizado = req.body; 
-  
-    try {
+app.put('/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const libroActualizado = req.body; 
 
-      const resultado = await editarLibro(id, libroActualizado);
-  
-      if (resultado) {
-        res.status(200).json({ mensaje: 'Libro actualizado con éxito' });
-      } else {
-        res.status(404).json({ mensaje: 'Libro no encontrado' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ mensaje: 'Error al actualizar el libro' });
+  try {
+    const resultado = await editarLibro(libroActualizado, id);
+
+    if (resultado.rowsAffected > 0) {
+      res.status(200).json({ mensaje: 'Libro actualizado con éxito' });
+    } else {
+      res.status(404).json({ mensaje: 'Libro no encontrado' });
     }
-  });
-
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al actualizar el libro' });
+  }
+});
 app.post('/create', async (req, res) => {
     const libro = new Libros();
     libro.foto = req.body.Foto;
