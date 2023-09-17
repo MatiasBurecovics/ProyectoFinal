@@ -1,51 +1,77 @@
-@media (max-width: 767px) {
-  body {
-    font-size: 14px;
-  }
+.busqueda-container {
+  padding: 16px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+
 }
-@media (min-width: 768px) {
-  body {
-    font-size: 16px;
-  }
 
+.universal-search {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  color: black;
 
+}
+
+.universal-search input,
+.term-search input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  color: black;
+}
+
+.universal-search-button,
+.term-search-button {
+  background-color: #007bff;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.universal-search-button:hover,
+.term-search-button:hover {
+  background-color: #0056b3;
+}
+
+.search-fields {
+  display: flex;
+  justify-content: space-between;
+}
+
+.busqueda-label {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.busqueda-checkbox {
+  margin-right: 4px;
+}
+
+/* Media Query para pantallas pequeñas (como dispositivos móviles) */
+@media (max-width: 768px) {
   .busqueda-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .busqueda-input {
-    flex: 1;
     padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
   }
-  
-  .busqueda-button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+
+  .universal-search input,
+  .term-search input {
+    font-size: 14px;
+    padding: 6px;
+    color: black;
   }
-  
-  .busqueda-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .busqueda-checkboxes {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .busqueda-checkbox {
-    margin-right: 5px;
+
+  .universal-search-button,
+  .term-search-button {
+    font-size: 14px;
+    padding: 6px 12px;
+    color: black;
   }
 }

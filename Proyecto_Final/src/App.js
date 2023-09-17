@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Busqueda from './Busqueda';
 import TablaLibros from './TablaLibros';
 import AgregarLibro from './AgregarLibro';
 import DetalleLibro from './DetalleLibro';
+import MisLibros from './Mislibros';
+import EditarLibro from './editarLibro';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchFields, setSearchFields] = useState([]);
   const [libros, setLibros] = useState([]);
+  const [usuarios, setUsuarios] = useState({});
   const [selectedLibro, setSelectedLibro] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
 
   const handleVerDetalles = (libro) => {
     setSelectedLibro(libro);
     setShowDetails(true);
   };
-  const toggleAddForm = () => {
-    setShowAddForm(!showAddForm);
-  };
-  const handleCloseDetails = () => {
-    setShowDetails(false);
-    setSelectedLibro(null);
-  };
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
+
+
+
 
 
   const handleToggleSearchField = (field) => {
@@ -37,10 +36,12 @@ function App() {
       setSearchFields([...searchFields, field]);
     }
   };
-  const handleSearch = async () => {
-    if (searchTerm !== '' && searchFields.length > 0) {
+
+
+  const handleSearch = async (term, fields) => {
+    if (term !== '' && fields.length > 0) {
       try {
-        const queryParams = searchFields.map((field) => `${field}=${searchTerm.toLowerCase()}`).join('&');
+        const queryParams = fields.map((field) => `${field}=${term.toLowerCase()}`).join('&');
   
         const response = await fetch(`http://localhost:4000/libros?${queryParams}`);
         if (response.ok) {
@@ -70,29 +71,55 @@ function App() {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getAllLibros();
   }, []);
 
+  useEffect(() => {
+    async function fetchUsuario(idUsuario) {
+      try {
+        const response = await fetch(`http://localhost:4000/usuario/${idUsuario}`);
+        if (response.ok) {
+          const data = await response.json();
+          setUsuarios((prevUsuarios) => ({
+            ...prevUsuarios,
+            [idUsuario]: data[0]?.nombre || 'Usuario no encontrado',
+          }));
+        } else {
+          console.error('Error al obtener datos de usuario:', response.status);
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    }
 
+    libros.forEach((libro) => {
+      if (!usuarios[libro.IdUsuario]) {
+        fetchUsuario(libro.IdUsuario);
+      }
+    });
+  }, [libros, usuarios]);
 
   return (
     <div className="App" style={{ backgroundColor: '#233061' }}>
- <Busqueda
-  searchTerm={searchTerm}
-  searchFields={searchFields}
-  handleSearchTerm={handleSearchTerm}
-  handleToggleSearchField={handleToggleSearchField}
-  handleSearch={handleSearch}
-/>
-     <button onClick={toggleAddForm}>Formulario para agregar libro</button>
-    {showAddForm && <AgregarLibro />}
-    {showDetails && selectedLibro && (
-        <DetalleLibro libro={selectedLibro} handleClose={handleCloseDetails} />
-      )}
-      {!showDetails && (
-        <TablaLibros libros={libros} handleVerDetalles={handleVerDetalles} />
-      )}
+      <Busqueda
+        searchTerm={searchTerm}
+        searchFields={searchFields}
+        handleSearchTerm={handleSearchTerm}
+        handleToggleSearchField={handleToggleSearchField}
+        handleSearch={handleSearch}
+   
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TablaLibros libros={libros} handleVerDetalles={handleVerDetalles} usuarios={usuarios} />} />
+          <Route path="/detalle-libro/:id" element={<DetalleLibro libros={libros} />} />
+          <Route path="/agregar-libro" element={<AgregarLibro />} />
+          <Route path="/mis-libros" element={<MisLibros />} />
+          <Route path="/editar-libro/:id" element={<EditarLibro />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

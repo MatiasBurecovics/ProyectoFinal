@@ -1,7 +1,14 @@
 import React from 'react';
 import './DetalleLibro.css';
+import { Link } from 'react-router-dom';
 
-const DetalleLibro = ({ libro, handleClose }) => {
+const DetalleLibro = ({ libroId, libros}) => {
+  const libro = libros.find((libro) => libro.id === libroId);
+
+  if (!libro) {
+    return <p>Libro no encontrado</p>;
+  }
+
   return (
     <div className="detalle-libro">
       <h2>Detalles del Libro</h2>
@@ -14,9 +21,11 @@ const DetalleLibro = ({ libro, handleClose }) => {
       <p>Precio: {libro.precio}</p>
       <p>Condición: {libro.condicion ? 'Nuevo' : 'Usado'}</p>
       <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
-      <button onClick={handleClose}>Cerrar</button>
+      <Link to="/">Volver a la lista de libros</Link>
+      <Link to="/mis-libros">Mis Libros</Link>
     </div>
   );
 };
+
 
 export default DetalleLibro;

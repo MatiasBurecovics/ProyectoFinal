@@ -1,15 +1,5 @@
 @media (max-width: 767px) {
-    body {
-      font-size: 14px;
-      color: aliceblue;
-    }
-  }
-  @media (min-width: 768px) {
-    body {
-      font-size: 16px;
-
-    }
-  }
+    
 .detalle-libro {
     display: flex;
     flex-direction: column;
@@ -26,6 +16,8 @@
   .detalle-libro h2 {
     margin-bottom: 10px;
     font-size: 24px;
+    color: black;
+
   }
   
   .detalle-libro img {
@@ -40,10 +32,14 @@
   .detalle-libro h3 {
     font-size: 20px;
     margin-bottom: 5px;
+    color: black;
+
   }
   
   .detalle-libro p {
     margin-bottom: 5px;
+    color: black;
+
   }
   
   .detalle-libro button {
@@ -59,4 +55,59 @@
   .detalle-libro button:hover {
     background-color: #1a2455;
   }
-  
+}
+.detalle-libro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.detalle-libro h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: black;
+
+}
+
+.detalle-libro img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detalle-libro h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: black;
+
+}
+
+.detalle-libro p {
+  margin-bottom: 5px;
+  color: black;
+
+}
+
+.detalle-libro button {
+  padding: 8px 16px;
+  background-color: #233061;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.detalle-libro button:hover {
+  background-color: #1a2455;
+}

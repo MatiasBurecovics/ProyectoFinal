@@ -1,24 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Busqueda.css';
 
-const Busqueda = ({ searchTerm, searchFields, handleSearchTerm, handleToggleSearchField, handleSearch }) => {
+const Busqueda = ({
+  searchTerm,
+  searchFields,
+  handleSearchTerm,
+  handleToggleSearchField,
+  handleSearch,
+}) => {
   const handleCombinedSearch = () => {
     handleSearch(searchTerm, searchFields);
   };
 
+  const [universalSearchTerm, setUniversalSearchTerm] = useState('');
+
+  const handleUniversalSearch = () => {
+    handleSearch(universalSearchTerm, [
+      'titulo',
+      'autor',
+      'editorial',
+      'condicion',
+      'precio',
+      'descripcion',
+      'buscoOVendo',
+    ]);
+  };
+
   return (
     <div className="busqueda-container">
-      <input
-        className="busqueda-input"
-        type="text"
-        placeholder="Buscar por término"
-        value={searchTerm}
-        onChange={handleSearchTerm}
-      />
-      <button className="busqueda-button" onClick={handleCombinedSearch}>
-        Buscar
-      </button>
-      <div className="busqueda-checkboxes">
+      <div className="universal-search">
+        <input
+          type="text"
+          placeholder="Búsqueda Universal"
+          value={universalSearchTerm}
+          onChange={(e) => setUniversalSearchTerm(e.target.value)}
+        />
+        <button className="universal-search-button" onClick={handleUniversalSearch}>
+          Buscar Universal
+        </button>
+      </div>
+      <div className="term-search">
+        <input
+          className="busqueda-input"
+          type="text"
+          placeholder="Buscar por término"
+          value={searchTerm}
+          onChange={handleSearchTerm}
+        />
+        <button className="term-search-button" onClick={handleCombinedSearch}>
+          Buscar
+        </button>
+      </div>
+      <div className="search-fields">
         <label className="busqueda-label">
           <input
             className="busqueda-checkbox"
@@ -53,6 +86,5 @@ const Busqueda = ({ searchTerm, searchFields, handleSearchTerm, handleToggleSear
     </div>
   );
 };
-
 
 export default Busqueda;

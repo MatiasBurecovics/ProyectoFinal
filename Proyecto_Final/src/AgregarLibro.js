@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AgregarLibro.css';
+import { Link } from 'react-router-dom';
 
 const AgregarLibro = () => {
     const [formData, setFormData] = useState({
@@ -186,6 +187,7 @@ const AgregarLibro = () => {
                     <button type="submit">Agregar Libro</button>
                 </form>
             </div>
+            <Link to="/">Volver a Tabla Libros</Link>
         </div>
     );
 };
