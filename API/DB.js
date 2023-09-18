@@ -1,7 +1,7 @@
 const configDB = {
     user: 'PF',
     password: 'PF',
-    server: 'localhost',
+    server: 'A-PHZ2-CIDI-025',
     database: 'Proyecto final',
     options: {
         trustServerCertificate: true,

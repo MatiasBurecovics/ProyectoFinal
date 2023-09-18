@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json())
 
 app.get('/libros', async(req, res) => {
-    const { foto,titulo,autor,materia,editorial,descripcion,condicion,buscoOVendo,precio } = req.query;
-    const Libros = await getAll(foto,titulo,autor,materia,editorial,descripcion,condicion,buscoOVendo,precio)
+    const { titulo,autor,materia,editorial} = req.query;
+    const Libros = await getAll(titulo,autor,materia,editorial)
     res.status(200).json(Libros)
 })
 

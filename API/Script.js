@@ -1,50 +1,14 @@
 import sql from 'mssql';
 import configDB from './DB.js';
 
-export const getAll = async (foto,titulo,autor,materia,editorial,descripcion,condicion,buscoOVendo,precio) => {
+export const getAll = async (texto) => {
     const conn = await sql.connect(configDB);
-    let query = `SELECT * FROM Libros WHERE 1=1`; 
-  
-    if (foto) {
-        query += ` AND foto LIKE '%${foto}%'`;
-      }
-      
-      if (titulo) {
-        query += ` AND titulo LIKE '%${titulo}%'`;
-      }
-      
-      if (autor) {
-        query += ` AND autor LIKE '%${autor}%'`;
-      }
-      
-      if (materia) {
-        query += ` AND materia LIKE '%${materia}%'`;
-      }
-      
-      if (editorial) {
-        query += ` AND editorial LIKE '%${editorial}%'`;
-      }
-      
-      if (descripcion) {
-        query += ` AND descripcion LIKE '%${descripcion}%'`;
-      }
-      if (condicion !== undefined) {
-        query += ` AND condicion = ${condicion}`;
-      }
-      
-      if (buscoOVendo !== undefined) {
-        query += ` AND buscoOVendo = ${buscoOVendo}`;
-      }
-      
-      if (precio!== undefined) {
-        query += ` AND precio = ${precio}`;
-      }
-  
+    let query = `SELECT * FROM Libros WHERE 1=1 AND titulo LIKE '%${texto}%' OR autor LIKE '%${texto}%' OR materia LIKE '%${texto}%' OR editorial LIKE '%${texto}%' `; 
     const results = await conn.request().query(query);
     return results.recordset;
   };
  export const obtenerLibroPorId = async (id) => {
-    const pool = await sql.connect(config);
+    const pool = await sql.connect(configDB);
     const response = await pool.request()
       .input('Id', sql.Int, id)
       .query('SELECT * FROM Libros WHERE Id = @Id');
@@ -82,7 +46,7 @@ export const insertarLibro = async (libro) => {
   return results.recordset;
 }
 export const editarLibro = async (libro, id) => {
-  const pool = await sql.connect(config);
+  const pool = await sql.connect(configDB);
   const valoresOriginales = await obtenerLibroPorId(id);
   
   const response = await pool.request()
