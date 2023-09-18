@@ -51,7 +51,7 @@ function App() {
   
         const filtroQueryParam = filtroBuscoOVendo === 'todos' ? '' : `&buscoOVendo=${filtroBuscoOVendo}`;
   
-        const response = await fetch(`http://localhost:4000/libros?${queryParams}${filtroQueryParam}`);
+        const response = await fetch(`http://localhost:4000/libros?${queryParams}${filtroQueryParam}`); 
         if (response.ok) {
           const data = await response.json();
           setLibros(data);

@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export default function EditarLibro() {
 
   
-  // Obtiene el ID del libro a editar
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
   
-  // Inicializa el estado del componente
   const [libro, setLibro] = useState({
     foto: '',
     titulo: '',
@@ -21,7 +19,6 @@ export default function EditarLibro() {
     precio: 0,
   });
   
-  // Vincula el evento de cambio de los campos del formulario
   const handleChange = (event) => {
     const { name, value } = event.target;
     setLibro((prevLibro) => ({
@@ -30,12 +27,10 @@ export default function EditarLibro() {
     }));
   };
   
-  // Vincula el evento de envío del formulario
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    // Actualiza el libro en la API
-    const response = await fetch(`http://localhost:4000/libros/${id}`, {
+    const response = await fetch(`http://localhost:4000/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +38,6 @@ export default function EditarLibro() {
       body: JSON.stringify(libro),
     });
   
-    // Si la actualización es exitosa, muestra un mensaje de éxito
     if (response.ok) {
       alert('Libro actualizado con éxito');
     } 
