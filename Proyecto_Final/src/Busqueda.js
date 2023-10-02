@@ -1,21 +1,31 @@
 import React from 'react';
 
 function Busqueda(props) {
-  const { searchTerm, searchFields, handleSearchTerm, handleToggleSearchField, handleSearch , filtroBuscoOVendo,setFiltroBuscoOVendo} = props;
-  
-  const handleFiltroBuscoOVendoChange = (e) => {
-    setFiltroBuscoOVendo(e.target.value);
-  };
+  const {
+    searchTerm,
+    searchFields,
+    handleSearchTerm,
+    handleToggleSearchField,
+    handleSearch,
+    filtroBuscoOVendo,
+    setFiltroBuscoOVendo,
+  } = props;
 
+  const handleFiltroBuscoOVendoChange = (e) => {
+    const value = e.target.value;
+    // Convertir el valor seleccionado a booleano
+    const buscoOVendo = value === 'true';
+
+    setFiltroBuscoOVendo(buscoOVendo);
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    handleSearch(searchTerm, searchFields,searchFields.includes('busco'), searchFields.includes('vendo'));
+    handleSearch(searchTerm, searchFields, filtroBuscoOVendo);
   };
 
   return (
     <div>
-      <h2>Búsqueda</h2>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
@@ -42,22 +52,21 @@ function Busqueda(props) {
         <label>
           <input
             type="checkbox"
-            checked={searchFields.includes('materia')}
-            onChange={() => handleToggleSearchField('materia')}
+            checked={searchFields.includes('editorial')}
+            onChange={() => handleToggleSearchField('editorial')}
           />
-          Materia
+          Editorial
         </label>
         <label>
-  <select
-    value={filtroBuscoOVendo}
-    onChange={(e) => handleFiltroBuscoOVendoChange(e)}
-  >
-    <option value="todos">Todos</option>
-    <option value="busco">Busco</option>
-    <option value="vendo">Vendo</option>
-  </select>
-</label>
-
+          <select
+            value={filtroBuscoOVendo ? true : false}
+            onChange={(e) => handleFiltroBuscoOVendoChange(e)}
+          >
+            <option value="todos">Todos</option>
+            <option value="true">Busco</option>
+            <option value="false">Vendo</option>
+          </select>
+        </label>
         <button type="submit">Buscar</button>
       </form>
     </div>

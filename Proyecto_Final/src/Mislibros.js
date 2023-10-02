@@ -30,48 +30,29 @@ function MisLibros() {
   return (
     <div className="mis-libros-container">
       <h2>Mis Libros</h2>
-      <div className="table-container">
-        <table className="mis-libros-table">
-          <thead>
-            <tr>
-              <th>Foto</th>
-              <th>Título</th>
-              <th>Autor</th>
-              <th>Editorial</th>
-              <th>Materia</th>
-              <th>Descripción</th>
-              <th>Condición</th>
-              <th>Busco o Vendo</th>
-              <th>Precio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {misLibros.map((libro) => (
-              <tr key={libro.Id}>
-                <td>
-                  <img
-                    src={libro.foto}
-                    alt={`Portada de ${libro.titulo}`}
-                    className="libro-foto"
-                  />
-                </td>
-                <td>{libro.titulo}</td>
-                <td>{libro.autor}</td>
-                <td>{libro.editorial}</td>
-                <td>{libro.materia}</td>
-                <td>{libro.descripcion}</td>
-                <td>{libro.condicion ? 'Nuevo' : 'Usado'}</td>
-                <td>{libro.buscoOVendo ? 'Busco' : 'Vendo'}</td>
-                <td>{libro.precio}</td>
-                <td>
-                  <Link to={`/editar-libro/${libro.Id}`}>Editar</Link>
-                  <Link to={`/detalle-libro/${libro.Id}`}>Ver detalles</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="cards-container">
+        {misLibros.map((libro) => (
+          <div key={libro.Id} className="libro-card">
+            <img
+              src={libro.foto}
+              alt={`Portada de ${libro.titulo}`}
+              className="libro-foto"
+            />
+            <div className="libro-info">
+              <h3>{libro.titulo}</h3>
+              <p>Autor: {libro.autor}</p>
+              <p>Editorial: {libro.editorial}</p>
+              <p>Materia: {libro.materia}</p>
+              <p>Descripción: {libro.descripcion}</p>
+              <p>Condición: {libro.condicion ? 'Nuevo' : 'Usado'}</p>
+              <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
+              <p>Precio: {libro.precio}</p>
+              <div className="libro-actions">
+                <Link to={`/agregar-libro/${libro.Id}`}>Editar</Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
       <Link to="/" className="link-volver">Volver a Tabla Libros</Link>
     </div>

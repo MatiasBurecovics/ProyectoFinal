@@ -1,20 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AgregarLibro.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const AgregarLibro = () => {
+    const { id } = useParams();
+    const [isEditMode, setIsEditMode] = useState(false);
+
     const [formData, setFormData] = useState({
-        Foto: null,
-        Titulo: '',
-        Autor: '',
-        Materia: '',
-        Editorial: '',
-        Descripcion: '',
-        Condicion: '',
-        BuscoOVendo: '',
-        Precio: '',
+        foto: null,
+        titulo: '',
+        autor: '',
+        materia: '',
+        editorial: '',
+        descripcion: '',
+        condicion: '',
+        buscoOVendo: '',
+        precio: '',
         IdUsuario: 1
     });
+
+    const [previewImage, setPreviewImage] = useState(null);
+
+    useEffect(() => {
+        if (id) {
+            setIsEditMode(true);
+            fetch(`http://localhost:4000/${id}`)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Libro no encontrado');
+                    }
+                })
+                .then((data) => {
+                    setFormData({
+                        foto: data[0].foto,
+                        titulo: data[0].titulo,
+                        autor: data[0].autor,
+                        materia: data[0].materia,
+                        editorial: data[0].editorial,
+                        descripcion: data[0].descripcion,
+                        condicion: data[0].condicion.toString(),
+                        buscoOVendo: data[0].buscoOVendo.toString(), 
+                        precio: data[0].precio.toString(),
+                        IdUsuario: 1, 
+                    });
+                    setPreviewImage(data[0].foto); 
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,59 +65,69 @@ const AgregarLibro = () => {
         const file = e.target.files[0];
         setFormData(prevData => ({
             ...prevData,
-            Foto: file
+            foto: file
         }));
+    
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const base64Image = reader.result;
+            setPreviewImage(base64Image);
+            setFormData(prevData => ({
+                ...prevData,
+                foto: base64Image 
+            }));
+        };
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const reader = new FileReader();
-        reader.readAsDataURL(formData.Foto);
-        reader.onload = async () => {
-            const base64Image = reader.result;
-
-            const dataToSend = {
-                ...formData,
-                Foto: base64Image,
-            };
-
-            try {
+    
+       
+        if (parseFloat(formData.precio) < 0) {
+            console.error('El precio debe ser un valor positivo.');
+            return;
+        }
+    
+        try {
+            if (id) {
+                const response = await fetch(`http://localhost:4000/update/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData), 
+                });
+                if (response.status === 200) {
+                    console.log('Libro actualizado correctamente');
+                } else {
+                    console.error('Error al editar el libro');
+                }
+            } else {
                 const response = await fetch('http://localhost:4000/create', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(dataToSend)
+                    body: JSON.stringify(formData), 
                 });
-
                 if (response.status === 201) {
                     console.log('Libro agregado correctamente');
-                    window.location.reload();
-                    setFormData({
-                        Foto: null,
-                        Titulo: '',
-                        Autor: '',
-                        Materia: '',
-                        Editorial: '',
-                        Descripcion: '',
-                        Condicion: '',
-                        BuscoOVendo: '',
-                        Precio: '',
-                        IdUsuario: 1
-                    });
                 } else {
-                    console.log('Error al agregar el libro');
+                    console.error('Error al agregar el libro');
                 }
-            } catch (error) {
-                console.error('Error:', error);
             }
-        };
+
+            // Recargar la página después de agregar o editar con éxito.
+            window.location.reload();
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
         <div>
-            <h2>Agregar Libro</h2>
+            <h2>{isEditMode ? 'Editar Libro' : 'Agregar Libro'}</h2>
             <div className="agregar-form">
                 <form onSubmit={handleSubmit}>
                     <label>
@@ -89,96 +136,94 @@ const AgregarLibro = () => {
                             type="file"
                             accept="image/*"
                             onChange={handleFileChange}
-                            required
                         />
+                        {previewImage && (
+                            <img
+                                src={previewImage}
+                                alt="Vista previa de la imagen"
+                                className="preview-image"
+                            />
+                        )}
                     </label>
                     <label>
                         Título:
                         <input
                             type="text"
-                            name="Titulo"
-                            value={formData.Titulo}
+                            name="titulo"
+                            value={formData.titulo}
                             onChange={handleChange}
                             placeholder="Título"
-                            required
                         />
                     </label>
                     <label>
                         Autor:
                         <input
                             type="text"
-                            name="Autor"
+                            name="autor"
                             value={formData.autor}
                             onChange={handleChange}
                             placeholder="Autor"
-                            required
                         />
                     </label>
                     <label>
                         Materia:
                         <input
                             type="text"
-                            name="Materia"
+                            name="materia"
                             value={formData.materia}
                             onChange={handleChange}
                             placeholder="Materia"
-                            required
                         />
                     </label>
                     <label>
                         Editorial:
                         <input
                             type="text"
-                            name="Editorial"
+                            name="editorial"
                             value={formData.editorial}
                             onChange={handleChange}
                             placeholder="Editorial"
-                            required
                         />
                     </label>
                     <label>
                         Descripción:
                         <textarea
-                            name="Descripcion"
+                            name="descripcion"
                             value={formData.descripcion}
                             onChange={handleChange}
                             placeholder="Descripción"
-                            required
                         />
                     </label>
                     <label>
                         Condición:
-                        <select name="Condicion" onChange={handleChange} required>
-            <option value="1">Usado</option>
-            <option value="0">Nuevo</option>
-        
-          </select>  
+                        <select name="condicion" value={formData.condicion} onChange={handleChange}>
+                            <option value="">Seleccionar Condición</option>
+                            <option value="1">Usado</option>
+                            <option value="0">Nuevo</option>
+                        </select>
                     </label>
                     <label>
                         Busco o Vendo:
-                        <select name="BuscoOVendo" onChange={handleChange} required>
-            <option value="1">Vendo</option>
-            <option value="0">Busco</option>
-        
-          </select>  
+                        <select name="buscoOVendo" value={formData.buscoOVendo} onChange={handleChange}>
+                            <option value="">Seleccionar Busco o Vendo</option>
+                            <option value="1">Vendo</option>
+                            <option value="0">Busco</option>
+                        </select>
                     </label>
                     <label>
                         Precio:
                         <input
                             type="number"
-                            name="Precio"
+                            name="precio"
                             value={formData.precio}
                             onChange={handleChange}
                             placeholder="Precio"
-                            required
                         />
                     </label>
-                   
-                    <button type="submit">Agregar Libro</button>
+                    <button type="submit">{isEditMode ? 'Guardar Cambios' : 'Agregar Libro'}</button>
                 </form>
             </div>
             <Link to="/" className="link-volver">Volver a Tabla Libros</Link>
-
         </div>
     );
 };

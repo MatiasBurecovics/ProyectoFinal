@@ -1,55 +1,91 @@
+/* Mislibros.css */
 
-.table-container {
-  overflow-x: auto;
+.mis-libros-container {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
-.mis-libros-table {
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.libro-card {
   width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.mis-libros-table th,
-.mis-libros-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  font-weight: bold; /* Esto ya establece el texto en negrita */
-  white-space: nowrap;
+  border-radius: 5px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  color: black;
+  transition: transform 0.2s;
+  margin-bottom: 20px;
 }
 
+.libro-card:hover {
+  transform: translateY(-5px);
+}
 
 .libro-foto {
-  max-width: 80px;
-  height: auto;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
+.libro-info {
+  padding: 10px;
+}
 
-.mis-libros-table a {
+.libro-info h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.libro-info p {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #555;
+}
+
+.libro-actions {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 10px;
+}
+
+.libro-actions a {
   text-decoration: none;
-  margin-right: 10px;
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  border-radius: 3px;
   color: #007bff;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.mis-libros-table a:hover {
-  color: #0056b3;
+
+.libro-actions a:hover {
+  background-color: #007bff;
+  color: #fff;
 }
 
-@media (max-width: 768px) {
-  .mis-libros-table {
-    font-size: 14px; 
-    color: black;
-  }
-
-  .mis-libros-table th,
-  .mis-libros-table td {
-    padding: 8px; 
-    color: black;
-  }
-
+.link-volver {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
 }

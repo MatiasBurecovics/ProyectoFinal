@@ -6,7 +6,7 @@ import TablaLibros from './TablaLibros';
 import AgregarLibro from './AgregarLibro';
 import DetalleLibro from './DetalleLibro';
 import MisLibros from './Mislibros';
-import EditarLibro from './editarLibro';
+
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -111,23 +111,33 @@ function App() {
 
   return (
     <div className="App" style={{ backgroundColor: '#233061' }}>
-      <Busqueda
-  searchTerm={searchTerm}
-  searchFields={searchFields}
-  handleSearchTerm={handleSearchTerm}
-  handleToggleSearchField={handleToggleSearchField}
-  handleSearch={handleSearch}
-  filtroBuscoOVendo={filtroBuscoOVendo}
-  setFiltroBuscoOVendo={setFiltroBuscoOVendo}
-   
-      />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<TablaLibros libros={libros} handleVerDetalles={handleVerDetalles} usuarios={usuarios} />} />
-          <Route path="/detalle-libro/:id" element={<DetalleLibro libros={libros} />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Busqueda
+                  searchTerm={searchTerm}
+                  searchFields={searchFields}
+                  handleSearchTerm={handleSearchTerm}
+                  handleToggleSearchField={handleToggleSearchField}
+                  handleSearch={handleSearch}
+                  filtroBuscoOVendo={filtroBuscoOVendo}
+                  setFiltroBuscoOVendo={setFiltroBuscoOVendo}
+                />
+                <TablaLibros
+                  libros={libros}
+                  handleVerDetalles={handleVerDetalles}
+                  usuarios={usuarios}
+                />
+              </>
+            }
+          />
+<Route path="/detalle-libro/:id" element={<DetalleLibro />} />
           <Route path="/agregar-libro" element={<AgregarLibro />} />
           <Route path="/mis-libros" element={<MisLibros />} />
-          <Route path="/editar-libro/:id" element={<EditarLibro />} />
+          <Route path="/agregar-libro/:id" element={<AgregarLibro />} />
         </Routes>
       </BrowserRouter>
     </div>

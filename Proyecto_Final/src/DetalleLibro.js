@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './DetalleLibro.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-const DetalleLibro = ({ libroId, libros}) => {
-  const libro = libros.find((libro) => libro.id === libroId);
+const DetalleLibro = () => {
+  const { id: libroId } = useParams(); 
+  const [libro, setLibro] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/${libroId}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Libro no encontrado');
+        }
+      })
+      .then((data) => {
+        setLibro(data[0]);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, [libroId]);
 
   if (!libro) {
-    return <p>Libro no encontrado</p>;
+    return <p>Cargando...</p>;
   }
 
   return (
@@ -22,10 +40,8 @@ const DetalleLibro = ({ libroId, libros}) => {
       <p>Condición: {libro.condicion ? 'Nuevo' : 'Usado'}</p>
       <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
       <Link to="/">Volver a la lista de libros</Link>
-      <Link to="/mis-libros">Mis Libros</Link>
     </div>
   );
 };
-
 
 export default DetalleLibro;
