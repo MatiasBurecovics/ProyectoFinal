@@ -49,6 +49,9 @@ function MisLibros() {
               <p>Precio: {libro.precio}</p>
               <div className="libro-actions">
                 <Link to={`/agregar-libro/${libro.Id}`}>Editar</Link>
+                <Link to="/agregar-libro">
+          Agregar Libro
+        </Link>
               </div>
             </div>
           </div>

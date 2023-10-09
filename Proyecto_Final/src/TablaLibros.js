@@ -17,6 +17,7 @@ const TablaLibros = ({ libros, usuarios }) => {
       );
     }
     return (
+      
       <div>
         {libros.map((libro) => (
           <div className="card" style={{ width: '18rem' }} key={libro.titulo}>
@@ -37,9 +38,6 @@ const TablaLibros = ({ libros, usuarios }) => {
     <div className="card-container">
       {renderCards()}
       <div className="link-container">
-        <Link to="/agregar-libro" className="link">
-          Agregar Libro
-        </Link>
         <Link to="/mis-libros" className="link">
           Mis Libros
         </Link>

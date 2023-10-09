@@ -9,6 +9,13 @@
   }
 }
 
+.preview-image {
+  margin-top: 15px;
+  max-width: 100px; /* Establece el ancho máximo deseado */
+  max-height: 100px; /* Establece la altura máxima deseada */
+}
+
+
 .App {
   text-align: center;
 }
