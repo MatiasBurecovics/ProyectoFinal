@@ -62,16 +62,17 @@ app.put('/update/:id', async (req, res) => {
 });
 app.post('/create', async (req, res) => {
     const libro = new Libros();
-    libro.foto = req.body.Foto;
-    libro.titulo = req.body.Titulo;
-    libro.autor = req.body.Autor;
+    libro.foto = req.body.foto;
     libro.titulo = req.body.titulo;
-    libro.editorial = req.body.Editorial;
-    libro.descripcion = req.body.Descripcion;
-    libro.condicion = req.body.Condicion;
-    libro.buscoOVendo = req.body.BuscoOVendo;
-    libro.precio = req.body.Precio;
+    libro.autor = req.body.autor;
+    libro.materia = req.body.materia;
+    libro.editorial = req.body.editorial;
+    libro.descripcion = req.body.descripcion;
+    libro.condicion = req.body.condicion;
+    libro.buscoOVendo = req.body.buscoOVendo;
+    libro.precio = req.body.precio;
     libro.IdUsuario=req.body.IdUsuario;
+
     const create = await insertarLibro(libro); 
     return res.status(201).send(create);
     });

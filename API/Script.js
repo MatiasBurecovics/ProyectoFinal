@@ -86,14 +86,14 @@ export const insertarLibro = async (libro) => {
       .input("pFoto", sql.VarChar, libro?.foto ?? '')
       .input("pTitulo", sql.VarChar, libro?.titulo ?? '')
       .input("pAutor", sql.VarChar, libro?.autor ?? '')
-      .input("ptitulo", sql.VarChar, libro?.titulo ?? '')
+      .input("pMateria", sql.VarChar, libro?.materia ?? '')
       .input("pEditorial", sql.VarChar, libro?.editorial ?? '')
       .input("pDescripcion", sql.VarChar, libro?.descripcion ?? '')
       .input("pCondicion", sql.Bit, libro?.condicion ?? false)
       .input("pBuscoOVendo", sql.Bit, libro?.buscoOvendo ?? false)
       .input("pPrecio", sql.Int, libro?.precio ?? 0)
       .input("pIdUsuario", sql.Int, libro?.IdUsuario ?? 0)
-      .query("INSERT INTO Libros(Foto, Titulo, Autor, titulo, Editorial, Descripcion, Condicion, BuscoOVendo, Precio, IdUsuario) VALUES (@pFoto, @pTitulo, @pAutor, @ptitulo, @pEditorial, @pDescripcion, @pCondicion, @pBuscoOVendo, @pPrecio, @pIdUsuario)");
+      .query("INSERT INTO Libros(Foto, Titulo, Autor,Materia, Editorial, Descripcion, Condicion, BuscoOVendo, Precio, IdUsuario) VALUES (@pFoto, @pTitulo, @pAutor,@pMateria, @pEditorial, @pDescripcion, @pCondicion, @pBuscoOVendo, @pPrecio, @pIdUsuario)");
   
   console.log(results);
   return results.recordset;
@@ -107,13 +107,13 @@ export const editarLibro = async (libro, id) => {
     .input('Foto', sql.VarChar, libro.foto || (valoresOriginales?.foto || ''))
     .input('Titulo', sql.VarChar, libro.titulo || (valoresOriginales?.titulo || ''))
     .input('Autor', sql.VarChar, libro.autor || (valoresOriginales?.autor || ''))
-    .input('titulo', sql.VarChar, libro.titulo || (valoresOriginales?.titulo || ''))
+    .input('Materia', sql.VarChar, libro.materia || (valoresOriginales?.materia || ''))
     .input('Editorial', sql.VarChar, libro.editorial || (valoresOriginales?.editorial || ''))
     .input('Descripcion', sql.VarChar, libro.descripcion || (valoresOriginales?.descripcion || ''))
     .input('Condicion', sql.Bit, libro.condicion || (valoresOriginales?.condicion || false))
     .input('BuscoOVendo', sql.Bit, libro.buscoOVendo || (valoresOriginales?.buscoOVendo || false))
     .input('Precio', sql.Int, libro.precio || (valoresOriginales?.precio || 0))
-    .query(`UPDATE Libros SET Foto = @Foto, Titulo = @Titulo, Autor = @Autor, titulo = @titulo, Editorial = @Editorial, Descripcion = @Descripcion, Condicion = @Condicion, BuscoOVendo = @BuscoOVendo, Precio = @Precio WHERE Id = @Id`);
+    .query(`UPDATE Libros SET Foto = @Foto, Titulo = @Titulo, Autor = @Autor ,Materia = @Materia, Editorial = @Editorial, Descripcion = @Descripcion, Condicion = @Condicion, BuscoOVendo = @BuscoOVendo, Precio = @Precio WHERE Id = @Id`);
   
   console.log(response);
   
