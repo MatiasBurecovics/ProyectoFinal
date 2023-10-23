@@ -1,6 +1,5 @@
 /* Estilos generales */
 
-/* Media Query para pantallas pequeñas (como dispositivos móviles) */
 @media (max-width: 767px) {
   body {
     font-size: 14px;
@@ -52,7 +51,6 @@
   margin-top: 10px;
 }
 
-/* Estilos para botones */
 .btn {
   display: flex;
   padding: 8px 16px;
@@ -68,7 +66,6 @@
   background-color: #0056b3;
 }
 
-/* Estilos para mensaje de error */
 .error-container {
   text-align: center;
   padding: 20px;
@@ -80,7 +77,6 @@
   font-size: 1.25rem;
 }
 
-/* Estilos para enlaces */
 .link-container {
   display: flex;
   flex-direction: column;

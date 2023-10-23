@@ -118,7 +118,6 @@ const AgregarLibro = () => {
                 }
             }
 
-            // Recargar la página después de agregar o editar con éxito.
             window.location.reload();
         } catch (error) {
             console.error('Error:', error);
@@ -223,7 +222,7 @@ const AgregarLibro = () => {
                     <button type="submit">{isEditMode ? 'Guardar Cambios' : 'Agregar Libro'}</button>
                 </form>
             </div>
-            <Link to="/" className="link-volver">Volver a Tabla Libros</Link>
+            <Link to="/mis-libros" className="link-volver">Volver a mis Libros</Link>
         </div>
     );
 };

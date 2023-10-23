@@ -36,13 +36,13 @@ const TablaLibros = ({ libros, usuarios }) => {
 
   return (
     <div className="card-container">
-      {renderCards()}
-      <div className="link-container">
-        <Link to="/mis-libros" className="link">
-          Mis Libros
-        </Link>
-      </div>
+    <div className="link-container">
+      <Link to="/mis-libros" className="link">
+        Mis Libros
+      </Link>
     </div>
+    {renderCards()}
+  </div>
   );
 }
 
