@@ -80,6 +80,13 @@ export const getUsuarioById = async(id)=>
   const results = await conn.request().input("pId",id).query('SELECT * FROM Usuario WHERE @pId = Id');
   return results.recordset;
 }
+export const getAllUsuarios = async()=>
+{
+  const conn = await sql.connect(configDB);
+  const results = await conn.request().query('SELECT * FROM Usuario');
+  return results.recordset;
+}
+
 export const insertarLibro = async (libro) => {
   const conn = await sql.connect(configDB);
   const results = await conn.request()
@@ -94,6 +101,20 @@ export const insertarLibro = async (libro) => {
       .input("pPrecio", sql.Int, libro?.precio ?? 0)
       .input("pIdUsuario", sql.Int, libro?.IdUsuario ?? 0)
       .query("INSERT INTO Libros(Foto, Titulo, Autor,Materia, Editorial, Descripcion, Condicion, BuscoOVendo, Precio, IdUsuario) VALUES (@pFoto, @pTitulo, @pAutor,@pMateria, @pEditorial, @pDescripcion, @pCondicion, @pBuscoOVendo, @pPrecio, @pIdUsuario)");
+  
+  console.log(results);
+  return results.recordset;
+}
+export const insertarUsuario = async (usuario) => {
+  const conn = await sql.connect(configDB);
+  const results = await conn.request()
+      .input("pMail", sql.VarChar, usuario?.mail ?? '')
+      .input("pNombre", sql.VarChar, usuario?.nombre ?? '')
+      .input("pApellido", sql.VarChar, usuario?.apellido ?? '')
+      .input("pSede", sql.VarChar, usuario?.sede ?? '')
+      .input("pFoto", sql.VarChar, usuario?.foto ?? '')
+      .input("pContraseña", sql.Text, usuario?.contraseña ?? '')
+      .query("INSERT INTO Usuario(Mail, Nombre , Apellido, Sede , Foto , Contraseña ) VALUES (@pMail, @pNombre, @pApellido,@pSede, @pFoto, @pContraseña)");
   
   console.log(results);
   return results.recordset;

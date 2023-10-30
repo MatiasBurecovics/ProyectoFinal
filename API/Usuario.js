@@ -5,6 +5,7 @@ class Usuario {
     apellido;
     sede;
     foto;
+    contraseña;
 }
 
 export default Usuario
