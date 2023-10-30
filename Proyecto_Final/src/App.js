@@ -6,7 +6,9 @@ import TablaLibros from './TablaLibros';
 import AgregarLibro from './AgregarLibro';
 import DetalleLibro from './DetalleLibro';
 import MisLibros from './Mislibros';
-
+import PantallaInicio from './PantallaInicio';
+import Registro from './Registro';
+import IniciarSesion from './IniciarSesion';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -113,8 +115,11 @@ function App() {
     <div className="App" style={{ backgroundColor: '#233061' }}>
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<PantallaInicio />} />
+        <Route path="/login" element={<IniciarSesion />} />
+        <Route path="/registro" element={<Registro />} />
           <Route
-            path="/"
+            path="/home"
             element={
               <>
                 <Busqueda

@@ -13,7 +13,6 @@ function Busqueda(props) {
 
   const handleFiltroBuscoOVendoChange = (e) => {
     const value = e.target.value;
-    // Convertir el valor seleccionado a booleano
     const buscoOVendo = value === 'true';
 
     setFiltroBuscoOVendo(buscoOVendo);

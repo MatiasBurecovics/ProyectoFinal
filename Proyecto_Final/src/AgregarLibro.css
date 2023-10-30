@@ -9,6 +9,10 @@
     }
   }
 
+  h1
+  {
+    color: white;
+  }
   .agregar-form {
     max-width: 500px;
     margin: 0 auto;
@@ -67,11 +71,10 @@
     display: block;
     margin-top: 20px;
     text-decoration: none;
-    color: #007bff; /* Color del enlace */
-    font-weight: bold; /* Texto en negrita */
+    color: #007bff; 
+    font-weight: bold; 
   }
   
-  /* Cambiar color al pasar el ratón sobre el enlace */
   .link-volver:hover {
-    color: #0056b3; /* Color al pasar el ratón */
+    color: #0056b3; 
   }

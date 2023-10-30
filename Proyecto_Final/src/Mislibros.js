@@ -55,10 +55,10 @@ function MisLibros() {
           </div>
         ))}
       </div>
-      <Link to="/agregar-libro">
+      <Link to="/agregar-libro" className="link-volver">
           Agregar Libro
         </Link>
-      <Link to="/" className="link-volver">Volver a Tabla Libros</Link>
+      <Link to="/home" className="link-volver">Volver a Tabla Libros</Link>
     </div>
   );
 }

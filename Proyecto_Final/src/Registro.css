@@ -1,0 +1,48 @@
+.registration-container {
+    background-color: #fff; /* Cambia esto al color de fondo que desees */
+    color: black;
+
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .registration-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .registration-container label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .registration-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Cambia esto al borde que desees */
+    border-radius: 5px;
+    background-color: transparent; /* Para que el fondo no cambie */
+    color: black;
+  }
+  
+  .registration-container input[type="file"] {
+    border: none;
+  }
+  
+  .registration-container button {
+    background-color: #007BFF; /* Cambia esto al color de fondo del botón */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .registration-container button:hover {
+    background-color: #0056b3; /* Cambia esto al color de fondo del botón al pasar el mouse */
+  }
+  

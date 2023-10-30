@@ -126,7 +126,7 @@ const AgregarLibro = () => {
 
     return (
         <div>
-            <h2>{isEditMode ? 'Editar Libro' : 'Agregar Libro'}</h2>
+            <h1>{isEditMode ? 'Editar Libro' : 'Agregar Libro'}</h1>
             <div className="agregar-form">
                 <form onSubmit={handleSubmit}>
                     <label>

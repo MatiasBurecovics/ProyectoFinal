@@ -39,7 +39,7 @@ const DetalleLibro = () => {
       <p>Precio: {libro.precio}</p>
       <p>Condición: {libro.condicion ? 'Nuevo' : 'Usado'}</p>
       <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
-      <Link to="/">Volver a la lista de libros</Link>
+      <Link to="/home">Volver a la lista de libros</Link>
     </div>
   );
 };
