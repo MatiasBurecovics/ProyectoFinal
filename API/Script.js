@@ -1,7 +1,7 @@
 import sql from 'mssql';
 import configDB from './DB.js';
 
-export const getAll = async (autor='',titulo='',editorial='',buscoOVendo=false) => {
+export const getAll = async (autor='',titulo='',editorial='') => {
     const conn = await sql.connect(configDB);
     let query = `SELECT * FROM Libros`; 
     let where=false
@@ -41,17 +41,7 @@ export const getAll = async (autor='',titulo='',editorial='',buscoOVendo=false) 
         query += ` WHERE editorial LIKE '%${editorial}%'`;
         where=true
        }
-       if (buscoOVendo) {
-        if(where)
-        {
-          query += ` AND buscoOVendo LIKE '%${buscoOVendo}%'`;
-        }
-         else
-         {
-          query += ` WHERE buscoOVendo LIKE '%${buscoOVendo}%'`;
-          where=true
-         }
-        }
+    
     
     }
     

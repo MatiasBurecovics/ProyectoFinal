@@ -1,4 +1,4 @@
-import { getAll, getUsuarioById, insertarLibro, editarLibro, obtenerLibroPorId, insertarUsuario, getAllUsuarios } from './Script.js';
+import { getAll, getUsuarioById, insertarLibro, editarLibro, obtenerLibroPorId, insertarUsuario, getAllUsuarios, getById } from './Script.js';
 import express from "express"
 import cors from  "cors";
 import Libros from './Libros.js';
@@ -10,9 +10,10 @@ const port = 4000
 app.use(cors());
 app.use(express.json())
 
+
 app.get('/libros', async(req, res) => {
-    const { autor,titulo,editorial,buscoOVendo } = req.query;
-    const Libros = await getAll(autor,titulo,editorial,buscoOVendo)
+    const { autor,titulo,editorial } = req.query;
+    const Libros = await getAll(autor,titulo,editorial)
     res.status(200).json(Libros)
 })
 app.get('/usuarios', async(req, res) => {
@@ -49,6 +50,20 @@ app.get('/usuario/:id', async(req, res) => {
         res.status(404).send()
      }
     res.status(200).send(UsuarioporId)
+})
+app.get('/libro/:id', async(req, res) => {
+  const id = req.params.id
+  if(id<1)
+  {
+      res.status(400).send()
+  }
+  const UsuarioporId = await getById(id)
+
+   if(UsuarioporId[0]==null)
+   {
+      res.status(404).send()
+   }
+  res.status(200).send(UsuarioporId)
 })
 app.put('/update/:id', async (req, res) => {
   const id = req.params.id;
@@ -97,23 +112,23 @@ app.post('/create', async (req, res) => {
         });
 
         app.post('/login', async (req, res) => {
-            const { mail, contraseña } = req.body;
-          
-            const usuario = await findUserByCredentials(mail, contraseña);
-          
-            if (usuario) {
-              // En una aplicación real, aquí deberías generar y devolver un token de acceso.
-              res.status(200).json({ message: 'Inicio de sesión exitoso' });
-            } else {
-              res.status(401).json({ message: 'Credenciales incorrectas' });
-            }
-          });
-          
-          const findUserByCredentials = async (mail, contraseña) => {
-            const usuarios = await getAllUsuarios(); // Asegúrate de tener una función similar para obtener usuarios
-          
-            return usuarios.find((usuario) => usuario.mail === mail && usuario.contraseña === contraseña);
-          };
+          const { mail, contraseña } = req.body;
+        
+          const usuario = await findUserByCredentials(mail, contraseña);
+        
+          if (usuario) {
+            res.status(200).json({ message: 'Inicio de sesión exitoso', Id: usuario.Id });
+          } else {
+            res.status(401).json({ message: 'Credenciales incorrectas' });
+          }
+        });
+        
+        const findUserByCredentials = async (mail, contraseña) => {
+          const usuarios = await getAllUsuarios();
+        
+          return usuarios.find((usuario) => usuario.mail === mail && usuario.contraseña === contraseña);
+        };
+        
 
 app.listen(port, async( ) => {
     console.log(`Example app listening on port ${port}`)
