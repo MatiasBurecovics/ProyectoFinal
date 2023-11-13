@@ -2,7 +2,8 @@ import React from 'react';
 import './TablaLibros.css';
 import { Link } from 'react-router-dom';
 
-const TablaLibros = ({ libros, usuarios }) => {
+const TablaLibros = ({ libros, usuarios, userId }) => {
+
   const findUserNameById = (id) => {
     const usuario = usuarios[id];
     return usuario || 'Usuario no encontrado';
@@ -37,9 +38,9 @@ const TablaLibros = ({ libros, usuarios }) => {
   return (
     <div className="card-container">
     <div className="link-container">
-      <Link to="/mis-libros" className="link">
-        Mis Libros
-      </Link>
+    <Link to={`/mis-libros/${userId}`} className="link">
+  Mis Libros
+</Link>
     </div>
     {renderCards()}
   </div>

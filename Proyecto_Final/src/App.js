@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Busqueda from './Busqueda';
 import TablaLibros from './TablaLibros';
@@ -9,27 +9,20 @@ import MisLibros from './Mislibros';
 import PantallaInicio from './PantallaInicio';
 import Registro from './Registro';
 import IniciarSesion from './IniciarSesion';
+import ChatScreen from './ChatScreen';
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchFields, setSearchFields] = useState([]);
   const [libros, setLibros] = useState([]);
   const [usuarios, setUsuarios] = useState({});
   const [selectedLibro, setSelectedLibro] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [filtroBuscoOVendo, setFiltroBuscoOVendo] = useState('todos'); 
-
-  const handleVerDetalles = (libro) => {
-    setSelectedLibro(libro);
-    setShowDetails(true);
-  };
+  const [userId, setUserId] = useState(null); 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchFields, setSearchFields] = useState([]);
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
-
-
-
 
 
   const handleToggleSearchField = (field) => {
@@ -45,15 +38,11 @@ function App() {
     if (term !== '' && fields.length > 0) {
       try {
         const queryParams = fields.map((field) => {
-          if (field === 'true' || field === 'false') {
-            return `buscoOVendo=${field === 'true'}`;
-          }
           return `${field}=${term.toLowerCase()}`;
         }).join('&');
   
-        const filtroQueryParam = filtroBuscoOVendo === 'todos' ? '' : `&buscoOVendo=${filtroBuscoOVendo}`;
   
-        const response = await fetch(`http://localhost:4000/libros?${queryParams}${filtroQueryParam}`); 
+        const response = await fetch(`http://localhost:4000/libros?${queryParams}`);
         if (response.ok) {
           const data = await response.json();
           setLibros(data);
@@ -66,6 +55,12 @@ function App() {
     } else {
       getAllLibros();
     }
+  };
+
+
+  const handleVerDetalles = (libro) => {
+    setSelectedLibro(libro);
+    setShowDetails(true);
   };
 
   const getAllLibros = async () => {
@@ -115,36 +110,34 @@ function App() {
     <div className="App" style={{ backgroundColor: '#233061' }}>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<PantallaInicio />} />
-        <Route path="/login" element={<IniciarSesion />} />
-        <Route path="/registro" element={<Registro />} />
+          <Route path="/" element={<PantallaInicio />} />
+          <Route path="/login" element={<IniciarSesion setUserId={setUserId} />} />
+          <Route path="/registro" element={<Registro />} />
           <Route
             path="/home"
             element={
               <>
-                <Busqueda
-                  searchTerm={searchTerm}
-                  searchFields={searchFields}
-                  handleSearchTerm={handleSearchTerm}
-                  handleToggleSearchField={handleToggleSearchField}
-                  handleSearch={handleSearch}
-                  filtroBuscoOVendo={filtroBuscoOVendo}
-                  setFiltroBuscoOVendo={setFiltroBuscoOVendo}
-                />
+                <Busqueda   searchTerm={searchTerm}
+  searchFields={searchFields}
+  handleSearchTerm={handleSearchTerm}
+  handleToggleSearchField={handleToggleSearchField}
+  handleSearch={handleSearch} />
                 <TablaLibros
                   libros={libros}
                   handleVerDetalles={handleVerDetalles}
                   usuarios={usuarios}
+                  userId={userId}
                 />
               </>
             }
-          />
-<Route path="/detalle-libro/:id" element={<DetalleLibro />} />
-          <Route path="/agregar-libro" element={<AgregarLibro />} />
-          <Route path="/mis-libros" element={<MisLibros />} />
-          <Route path="/agregar-libro/:id" element={<AgregarLibro />} />
-        </Routes>
-      </BrowserRouter>
+            />
+            <Route path="/detalle-libro/:id" element={<DetalleLibro />} />
+            <Route path="/agregar-libro/:userId" element={<AgregarLibro />} />
+            <Route path="/mis-libros/:userId" element={<MisLibros userId={userId} />} />
+            <Route path="/editar-libro/:id" element={<AgregarLibro />} />
+            <Route path="/chat/:id" element={<ChatScreen />} />
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }

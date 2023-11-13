@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './AgregarLibro.css';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const AgregarLibro = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [isEditMode, setIsEditMode] = useState(false);
-
+    const { userId } = useParams();
+    
     const [formData, setFormData] = useState({
         foto: null,
         titulo: '',
@@ -16,7 +18,7 @@ const AgregarLibro = () => {
         condicion: '',
         buscoOVendo: '',
         precio: '',
-        IdUsuario: 1
+        IdUsuario: userId
     });
 
     const [previewImage, setPreviewImage] = useState(null);
@@ -43,7 +45,7 @@ const AgregarLibro = () => {
                         condicion: data[0].condicion.toString(),
                         buscoOVendo: data[0].buscoOVendo.toString(), 
                         precio: data[0].precio.toString(),
-                        IdUsuario: 1, 
+                        IdUsuario: userId, 
                     });
                     setPreviewImage(data[0].foto); 
                 })
@@ -83,7 +85,6 @@ const AgregarLibro = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-       
         if (parseFloat(formData.precio) < 0) {
             console.error('El precio debe ser un valor positivo.');
             return;
@@ -118,7 +119,7 @@ const AgregarLibro = () => {
                 }
             }
 
-            window.location.reload();
+            navigate(-1);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -222,7 +223,7 @@ const AgregarLibro = () => {
                     <button type="submit">{isEditMode ? 'Guardar Cambios' : 'Agregar Libro'}</button>
                 </form>
             </div>
-            <Link to="/mis-libros" className="link-volver">Volver a mis Libros</Link>
+            <button onClick={() => navigate(-1)}>Volver</button>
         </div>
     );
 };

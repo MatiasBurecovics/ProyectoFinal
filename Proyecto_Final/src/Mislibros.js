@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './Mislibros.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function MisLibros() {
+  const { userId } = useParams();
   const [misLibros, setMisLibros] = useState([]);
-  const simulatedUserId = 1;
 
   useEffect(() => {
     const fetchMisLibros = async () => {
       try {
-        const response = await fetch('http://localhost:4000/libros');
+        const response = await fetch(`http://localhost:4000/libro/${userId}`);
         if (response.ok) {
           const data = await response.json();
-          const librosUsuarioSimulado = data.filter(
-            (libro) => libro.IdUsuario === simulatedUserId
-          );
-          setMisLibros(librosUsuarioSimulado);
+          setMisLibros(data);
+        } else if (response.status === 404) {
+          console.log('No hay libros para el usuario');
         } else {
           console.error('Error:', response.status);
         }
@@ -25,7 +24,8 @@ function MisLibros() {
     };
 
     fetchMisLibros();
-  }, []);
+  }, [userId]);
+
 
   return (
     <div className="mis-libros-container">
@@ -48,16 +48,16 @@ function MisLibros() {
               <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
               <p>Precio: {libro.precio}</p>
               <div className="libro-actions">
-                <Link to={`/agregar-libro/${libro.Id}`}>Editar</Link>
+                <Link to={`/editar-libro/${libro.Id}`}>Editar</Link>
  
               </div>
             </div>
           </div>
         ))}
       </div>
-      <Link to="/agregar-libro" className="link-volver">
-          Agregar Libro
-        </Link>
+      <Link to={`/agregar-libro/${userId}`} className="link-volver">
+        Agregar Libro
+      </Link>
       <Link to="/home" className="link-volver">Volver a Tabla Libros</Link>
     </div>
   );

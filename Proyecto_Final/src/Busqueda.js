@@ -1,26 +1,18 @@
 import React from 'react';
 
 function Busqueda(props) {
-  const {
-    searchTerm,
-    searchFields,
-    handleSearchTerm,
-    handleToggleSearchField,
-    handleSearch,
-    filtroBuscoOVendo,
-    setFiltroBuscoOVendo,
-  } = props;
-
-  const handleFiltroBuscoOVendoChange = (e) => {
-    const value = e.target.value;
-    const buscoOVendo = value === 'true';
-
-    setFiltroBuscoOVendo(buscoOVendo);
-  };
+  const { searchTerm, searchFields, handleSearchTerm, handleToggleSearchField, handleSearch } = props;
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    handleSearch(searchTerm, searchFields, filtroBuscoOVendo);
+
+    const selectedFields = searchFields.length > 0 ? searchFields : ['titulo'];
+
+    const searchTermLower = searchTerm.toLowerCase();
+
+    const selectedFieldsLower = selectedFields.map(field => field.toLowerCase());
+
+    handleSearch(searchTermLower, selectedFieldsLower);
   };
 
   return (
@@ -51,21 +43,12 @@ function Busqueda(props) {
         <label>
           <input
             type="checkbox"
-            checked={searchFields.includes('editorial')}
-            onChange={() => handleToggleSearchField('editorial')}
+            checked={searchFields.includes('materia')}
+            onChange={() => handleToggleSearchField('materia')}
           />
-          Editorial
+          Materia
         </label>
-        <label>
-          <select
-            value={filtroBuscoOVendo ? true : false}
-            onChange={(e) => handleFiltroBuscoOVendoChange(e)}
-          >
-            <option value="todos">Todos</option>
-            <option value="true">Busco</option>
-            <option value="false">Vendo</option>
-          </select>
-        </label>
+
         <button type="submit">Buscar</button>
       </form>
     </div>

@@ -3,7 +3,7 @@ import './DetalleLibro.css';
 import { Link, useParams } from 'react-router-dom';
 
 const DetalleLibro = () => {
-  const { id: libroId } = useParams(); 
+  const { id: libroId } = useParams();
   const [libro, setLibro] = useState(null);
 
   useEffect(() => {
@@ -39,7 +39,13 @@ const DetalleLibro = () => {
       <p>Precio: {libro.precio}</p>
       <p>Condición: {libro.condicion ? 'Nuevo' : 'Usado'}</p>
       <p>Busco o Vendo: {libro.buscoOVendo ? 'Busco' : 'Vendo'}</p>
-      <Link to="/home">Volver a la lista de libros</Link>
+
+
+      <Link to={`/chat/${libro.id}`}>
+        <button>Ir al Chat</button>
+      </Link>
+
+      <Link to="/home" className="link">Volver a la lista de libros</Link>
     </div>
   );
 };
